@@ -2,28 +2,28 @@ package shibuyaproyect;
 
 import java.util.Random;
 
-
 public class Vehiculo {
-    
+
     private int id;
     private int direccion;
     private String origen;
+    private static final Random random = new Random();
 
     public Vehiculo(int id) {
         this.id = id;
         this.origen = null;
-        this.direccion = new Random(System.currentTimeMillis()).nextInt(3);
+        this.direccion = random.nextInt(3);
     }
 
     public int getId() {
         return id;
-    }    
+    }
 
-    public String getOrigen(){
+    public String getOrigen() {
         return origen;
     }
 
-    public void setOrigen(String origen){
+    public void setOrigen(String origen) {
         this.origen = origen;
     }
 
@@ -32,13 +32,12 @@ public class Vehiculo {
     }
 
     public void setDireccion() {
-        this.direccion = new Random(System.currentTimeMillis()).nextInt(3);
-    }   
-    
+        this.direccion = random.nextInt(3);
+    }
+
     @Override
     public String toString() {
         return "Vehiculo{" + "id=" + id + ", direccion=" + direccion + '}';
     }
-    
-    
+
 }

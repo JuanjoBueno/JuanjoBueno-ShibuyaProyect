@@ -28,6 +28,14 @@ public class Garaje implements Runnable {
     public LinkedBlockingQueue<Vehiculo> getGarajeCola() {
         return garajeCola;
     }
+    
+    public void addCoche(Vehiculo coche){
+        try {
+            this.garajeCola.put(coche);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Garaje.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public int getcapacidad(LinkedBlockingQueue<Vehiculo> garaje) {
         return garaje.size();
@@ -47,10 +55,9 @@ public class Garaje implements Runnable {
             coche.setDireccion();
             coche.setOrigen(this.nombreGaraje);
             if (coche.getDireccion()==0){
-                s1.getCarril().put(coche);
+                s1.addCoche(coche);
             } else {
-                s2.getCarril().put(coche);
-                
+                s2.addCoche(coche);                
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

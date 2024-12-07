@@ -1,6 +1,8 @@
 package shibuyaproyect;
 
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Semaforo implements Runnable{
@@ -36,8 +38,16 @@ public class Semaforo implements Runnable{
         return carril;
     }
 
-    public int cargaCarril(LinkedBlockingQueue<Vehiculo> getCarril){
+    public int acumulacionCoches(LinkedBlockingQueue<Vehiculo> getCarril){
         return carril.size();
+    }
+    
+    public void addCoche(Vehiculo coche){
+        try {
+            this.carril.put(coche);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Semaforo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public int getTiempoVerde() {
@@ -62,7 +72,7 @@ public class Semaforo implements Runnable{
             if(coche.getDireccion() == 0){
                 switch (coche.getOrigen()){
                     case "s":
-                    w.getGarajeCola().put(coche);
+                    
                 }
             }
         } catch (InterruptedException e) {            
@@ -80,6 +90,13 @@ public class Semaforo implements Runnable{
                     e.printStackTrace();
                 }
             } while (isVerde == true){
+                while (getCarril().isEmpty()){
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Semaforo.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 salida();
             }
         }
