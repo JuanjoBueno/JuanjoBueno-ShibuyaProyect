@@ -43,11 +43,15 @@ public class Semaforo implements Runnable{
 
     public void setTiempoRojo(int tiempoRojo) {
         this.tiempoRojo = tiempoRojo;
-    }    
+    }  
+    
+    public void salida(){
+        
+    }
 
     @Override
     public void run() {
-        
+        salida();
     }
     
 }

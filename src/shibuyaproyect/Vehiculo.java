@@ -21,9 +21,9 @@ public class Vehiculo {
         return direccion;
     }
 
-    public void setDireccion(int direccion) {
-        this.direccion = direccion;
-    }
+    public void setDireccion() {
+        this.direccion = new Random(System.currentTimeMillis()).nextInt(3);
+    }   
     
     @Override
     public String toString() {
