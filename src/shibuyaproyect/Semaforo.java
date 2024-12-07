@@ -11,12 +11,13 @@ public class Semaforo implements Runnable{
     private int tiempoRojo;
     boolean isVerde;
     
-    public Semaforo (String nombreSemaforo, LinkedBlockingQueue<Vehiculo> carril, int tiempoVerde, int tiempoRojo, boolean isVerde){
+    public Semaforo (String nombreSemaforo){
+        super();
         this.nombreSemaforo = nombreSemaforo;
-        this.carril = carril;
-        this.tiempoVerde = tiempoVerde;
-        this.tiempoRojo = tiempoRojo;
-        this.isVerde = isVerde;
+        this.carril = new LinkedBlockingQueue<>();
+        this.tiempoVerde = 10000;
+        this.tiempoRojo = 10000;
+        this.isVerde = true;
     }
 
     public boolean getIsVerde(){

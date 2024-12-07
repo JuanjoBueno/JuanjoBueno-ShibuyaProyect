@@ -7,23 +7,26 @@ import java.util.logging.Logger;
 public class Garaje implements Runnable {
 
     private String nombreGaraje;
-    private LinkedBlockingQueue<Vehiculo> garaje;
+    private LinkedBlockingQueue<Vehiculo> garajeCola;
     private Semaforo s1;
     private Semaforo s2;
 
-    public Garaje(String nombre, LinkedBlockingQueue<Vehiculo> garaje, Semaforo s1, Semaforo s2) {
-        this.nombreGaraje = nombre;
-        this.garaje = garaje;
-        this.s1 = s1;
-        this.s2 = s2;
+    public Garaje(String nombreGaraje, boolean semaforo) {
+        super();
+        this.nombreGaraje = nombreGaraje;
+        this.garajeCola = new LinkedBlockingQueue<>();
+        this.s1 = new Semaforo("s1");
+        this.s2 = new Semaforo("s2");
+        this.s1.setIsVerde(semaforo);
+        this.s2.setIsVerde(semaforo);        
     }
 
     public String getNombreGaraje() {
         return nombreGaraje;
     }
 
-    public LinkedBlockingQueue<Vehiculo> getGaraje() {
-        return garaje;
+    public LinkedBlockingQueue<Vehiculo> getGarajeCola() {
+        return garajeCola;
     }
 
     public int getcapacidad(LinkedBlockingQueue<Vehiculo> garaje) {
@@ -40,7 +43,7 @@ public class Garaje implements Runnable {
 
     public void salida() {
         try {
-            Vehiculo coche = getGaraje().take();
+            Vehiculo coche = getGarajeCola().take();
             coche.setDireccion();
             coche.setOrigen(this.nombreGaraje);
             if (coche.getDireccion()==0){
@@ -55,9 +58,9 @@ public class Garaje implements Runnable {
 
     @Override
     public void run() {
-        while (!garaje.isEmpty()) {
+        while (!garajeCola.isEmpty()) {
             salida();
-            while (garaje.isEmpty()) {
+            while (garajeCola.isEmpty()) {
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException ex) {
