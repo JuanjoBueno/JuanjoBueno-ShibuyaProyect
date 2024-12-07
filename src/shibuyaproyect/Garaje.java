@@ -50,6 +50,7 @@ public class Garaje implements Runnable {
                 s1.getCarril().put(coche);
             } else {
                 s2.getCarril().put(coche);
+                
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

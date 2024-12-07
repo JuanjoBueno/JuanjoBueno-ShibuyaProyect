@@ -62,7 +62,7 @@ public class Semaforo implements Runnable{
             if(coche.getDireccion() == 0){
                 switch (coche.getOrigen()){
                     case "s":
-                    
+                    w.getGarajeCola().put(coche);
                 }
             }
         } catch (InterruptedException e) {            
