@@ -9,12 +9,22 @@ public class Semaforo implements Runnable{
     private LinkedBlockingQueue<Vehiculo> carril;
     private int tiempoVerde;
     private int tiempoRojo;
+    boolean isVerde;
     
-    public Semaforo (String nombre, LinkedBlockingQueue<Vehiculo> carril, int tiempoVerde, int tiempoRojo){
+    public Semaforo (String nombre, LinkedBlockingQueue<Vehiculo> carril, int tiempoVerde, int tiempoRojo, boolean isVerde){
         this.nombre = nombre;
         this.carril = carril;
         this.tiempoVerde = tiempoVerde;
         this.tiempoRojo = tiempoRojo;
+        this.isVerde = isVerde;
+    }
+
+    public boolean getIsVerde(){
+        return isVerde;
+    }
+
+    public void setIsVerde(boolean luzEncendida){
+        this.isVerde = luzEncendida;
     }
 
     public String getNombre() {
@@ -51,7 +61,18 @@ public class Semaforo implements Runnable{
 
     @Override
     public void run() {
-        salida();
+        while (!getCarril().isEmpty()){
+            while (isVerde == false){
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {                    
+                    e.printStackTrace();
+                }
+            } while (isVerde == true){
+                salida();
+            }
+        }
+        
     }
     
 }
