@@ -6,20 +6,20 @@ import java.util.logging.Logger;
 
 public class Garaje implements Runnable {
 
-    private String nombre;
+    private String nombreGaraje;
     private LinkedBlockingQueue<Vehiculo> garaje;
     private Semaforo s1;
     private Semaforo s2;
 
     public Garaje(String nombre, LinkedBlockingQueue<Vehiculo> garaje, Semaforo s1, Semaforo s2) {
-        this.nombre = nombre;
+        this.nombreGaraje = nombre;
         this.garaje = garaje;
         this.s1 = s1;
         this.s2 = s2;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreGaraje() {
+        return nombreGaraje;
     }
 
     public LinkedBlockingQueue<Vehiculo> getGaraje() {
@@ -42,6 +42,7 @@ public class Garaje implements Runnable {
         try {
             Vehiculo coche = getGaraje().take();
             coche.setDireccion();
+            coche.setOrigen(this.nombreGaraje);
             if (coche.getDireccion()==0){
                 s1.getCarril().put(coche);
             } else {

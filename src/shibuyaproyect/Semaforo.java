@@ -5,14 +5,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class Semaforo implements Runnable{
     
-    private String nombre;
+    private String nombreSemaforo;
     private LinkedBlockingQueue<Vehiculo> carril;
     private int tiempoVerde;
     private int tiempoRojo;
     boolean isVerde;
     
-    public Semaforo (String nombre, LinkedBlockingQueue<Vehiculo> carril, int tiempoVerde, int tiempoRojo, boolean isVerde){
-        this.nombre = nombre;
+    public Semaforo (String nombreSemaforo, LinkedBlockingQueue<Vehiculo> carril, int tiempoVerde, int tiempoRojo, boolean isVerde){
+        this.nombreSemaforo = nombreSemaforo;
         this.carril = carril;
         this.tiempoVerde = tiempoVerde;
         this.tiempoRojo = tiempoRojo;
@@ -27,8 +27,8 @@ public class Semaforo implements Runnable{
         this.isVerde = luzEncendida;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreSemaforo() {
+        return nombreSemaforo;
     }   
 
     public LinkedBlockingQueue<Vehiculo> getCarril() {
@@ -56,7 +56,17 @@ public class Semaforo implements Runnable{
     }  
     
     public void salida(){
-        
+        try {
+            Vehiculo coche = getCarril().take();
+            if(coche.getDireccion() == 0){
+                switch (coche.getOrigen()){
+                    case "s":
+                    
+                }
+            }
+        } catch (InterruptedException e) {            
+            e.printStackTrace();
+        }
     }
 
     @Override
