@@ -1,14 +1,16 @@
 package shibuyaproyect;
 
+import java.util.Random;
+
 
 public class Vehiculo {
     
     private int id;
     private int direccion;
 
-    public Vehiculo(int id, int direccion) {
+    public Vehiculo(int id) {
         this.id = id;
-        this.direccion = direccion;
+        this.direccion = new Random(System.currentTimeMillis()).nextInt(3);
     }
 
     public int getId() {
