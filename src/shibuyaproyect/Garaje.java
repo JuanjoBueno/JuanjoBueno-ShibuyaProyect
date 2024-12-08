@@ -10,16 +10,38 @@ public class Garaje implements Runnable {
     private LinkedBlockingQueue<Vehiculo> garajeCola;
     private Semaforo s1;
     private Semaforo s2;
+    private int numeroCoches = 20;
 
-    public Garaje(String nombreGaraje, boolean semaforo) {
+    public Garaje(String nombreGaraje) {
         super();
         this.nombreGaraje = nombreGaraje;
         this.garajeCola = new LinkedBlockingQueue<>();
-        this.s1 = new Semaforo("s1");
-        this.s2 = new Semaforo("s2");
-        this.s1.setIsVerde(semaforo);
-        this.s2.setIsVerde(semaforo);        
+        this.s1 = s1;
+        this.s2 = s2;        
+        
+        for (int i = 0; i < numeroCoches; i++) {
+            Vehiculo coche = new Vehiculo(i+1);
+            addCoche(coche);
+        }
     }
+
+    public void setS1(Semaforo s1) {
+        this.s1 = s1;
+    }
+
+    public void setS2(Semaforo s2) {
+        this.s2 = s2;
+    }
+
+    public int getNumeroCoches() {
+        return numeroCoches;
+    }
+
+    public void setNumeroCoches(int numeroCoches) {
+        this.numeroCoches = numeroCoches;
+    }
+    
+    
 
     public String getNombreGaraje() {
         return nombreGaraje;
@@ -37,8 +59,8 @@ public class Garaje implements Runnable {
         }
     }
 
-    public int getcapacidad(LinkedBlockingQueue<Vehiculo> garaje) {
-        return garaje.size();
+    public int getcapacidad() {
+        return garajeCola.size();
     }
 
     public Semaforo getS1() {
@@ -51,7 +73,7 @@ public class Garaje implements Runnable {
 
     public void salida() {
         try {
-            Vehiculo coche = getGarajeCola().take();
+            Vehiculo coche = garajeCola.take();
             coche.setDireccion();
             coche.setOrigen(this.nombreGaraje);
             if (coche.getDireccion()==0){
@@ -68,12 +90,10 @@ public class Garaje implements Runnable {
     public void run() {
         while (!garajeCola.isEmpty()) {
             salida();
-            while (garajeCola.isEmpty()) {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Garaje.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            try {
+                Thread.sleep(2000); // Simular tiempo entre salidas
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Garaje.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
