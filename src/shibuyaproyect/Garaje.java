@@ -116,5 +116,4 @@ public class Garaje implements Runnable{
             Logger.getLogger(Garaje.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }
