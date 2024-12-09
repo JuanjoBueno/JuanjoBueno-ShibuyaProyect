@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 public class Semaforo implements Runnable {
 
     private String nombreSemaforo;
-    private LinkedBlockingQueue<Vehiculo> carril;
+    private LinkedBlockingQueue<Coche> carril;
     private int tiempoVerde;
     private int tiempoRojo;
     private boolean isVerde;
@@ -36,7 +36,7 @@ public class Semaforo implements Runnable {
         return nombreSemaforo;
     }
 
-    public LinkedBlockingQueue<Vehiculo> getCarril() {
+    public LinkedBlockingQueue<Coche> getCarril() {
         return carril;
     }
 
@@ -44,7 +44,7 @@ public class Semaforo implements Runnable {
         return carril.size();
     }
 
-    public void addCoche(Vehiculo coche) {
+    public void addCoche(Coche coche) {
         try {
             carril.put(coche);
         } catch (InterruptedException ex) {
@@ -70,7 +70,7 @@ public class Semaforo implements Runnable {
 
     public void salida() {
         try {
-            Vehiculo coche = carril.take();
+            Coche coche = carril.take();
             coche.setOrigen(this.nombreSemaforo);
             if (coche.getDireccion() == 0) {
                 switch (coche.getOrigen()) {
@@ -118,7 +118,7 @@ public class Semaforo implements Runnable {
                         break;
                 }
             } coche.setDireccion();
-            System.out.println(coche.getId() + " sale de " + this.nombreSemaforo);
+            System.out.println(coche.getId() + " sale de semaforo" + this.nombreSemaforo);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

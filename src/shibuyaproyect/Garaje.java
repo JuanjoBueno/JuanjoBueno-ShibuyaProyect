@@ -1,104 +1,50 @@
 package shibuyaproyect;
 
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class Garaje implements Runnable {
+public class Garaje{
 
-    private String nombreGaraje;
-    private LinkedBlockingQueue<Vehiculo> garajeCola;
-    private Semaforo s1;
-    private Semaforo s2;
-    private int numeroCoches = 20;
+    private final int cochesIniciales = 20;
+    private final String nombre;
+    private final LinkedBlockingQueue<Coche> garaje;
+    private final LinkedBlockingQueue<Coche> semaforoCarrilIzq;
+    private final LinkedBlockingQueue<Coche> semaforoCarrilDerch;
 
-    public Garaje(String nombreGaraje) {
-        super();
-        this.nombreGaraje = nombreGaraje;
-        this.garajeCola = new LinkedBlockingQueue<>();
-        this.s1 = s1;
-        this.s2 = s2;        
-        
-        for (int i = 0; i < numeroCoches; i++) {
-            Vehiculo coche = new Vehiculo(nombreGaraje + (i+1));            
-            addCoche(coche);
+    public Garaje(String nombre) {
+        this.nombre = nombre;
+        this.garaje = new LinkedBlockingQueue<>();
+        this.semaforoCarrilIzq = new LinkedBlockingQueue<>();
+        this.semaforoCarrilDerch = new LinkedBlockingQueue<>();
+        for (int i = 0; i < cochesIniciales; i++) {
+            agregarCoche(new Coche(nombre + (i+1)));          
         }
     }
 
-    public void setS1(Semaforo s1) {
-        this.s1 = s1;
+    public void agregarCoche(Coche coche) {
+        garaje.add(coche);
     }
 
-    public void setS2(Semaforo s2) {
-        this.s2 = s2;
+    public Coche retirarCoche() throws InterruptedException {
+        return garaje.take();
     }
 
-    public int getNumeroCoches() {
-        return numeroCoches;
-    }
-
-    public void setNumeroCoches(int numeroCoches) {
-        this.numeroCoches = numeroCoches;
-    }   
-
-    public String getNombreGaraje() {
-        return nombreGaraje;
-    }
-
-    public LinkedBlockingQueue<Vehiculo> getGarajeCola() {
-        return garajeCola;
+    public void recibirCoche(Coche coche) throws InterruptedException {
+        garaje.put(coche);
     }
     
-    public void addCoche(Vehiculo coche){
-        try {
-            this.garajeCola.put(coche);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Garaje.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public int cantidadCoches() {
+        return garaje.size();
     }
-
-    public int getcapacidad() {
-        return garajeCola.size();
-    }
-
-    public Semaforo getS1() {
-        return s1;
-    }
-
-    public Semaforo getS2() {
-        return s2;
-    }
-
-    public void salida() {
-        try {
-            Vehiculo coche = garajeCola.take();
-            coche.setDireccion();
-            coche.setOrigen(this.nombreGaraje);
-            if (coche.getDireccion()==0){
-                s1.addCoche(coche);
-                System.out.println(coche.getId() + " en el carril derecho desde " + coche.getOrigen() );
-            } else {
-                s2.addCoche(coche);
-                System.out.println(coche.getId() + " en el carril izquierdo desde " + coche.getOrigen());
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    
+    private void distribuirCoches(){
+        while (!garaje.isEmpty()){
+            
         }
     }
 
     @Override
-    public void run() {
-        while (!garajeCola.isEmpty()) {
-            salida();
-            try {
-                Thread.sleep(2000);
-                while (garajeCola.isEmpty()){
-                Thread.sleep(1000);
-            }
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Garaje.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-        }
-    }
+    public String toString() {
+        return nombre;
+    }   
 
 }
