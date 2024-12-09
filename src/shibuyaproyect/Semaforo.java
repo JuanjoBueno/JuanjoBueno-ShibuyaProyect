@@ -1,151 +1,54 @@
 package shibuyaproyect;
 
-import java.util.Map;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class Semaforo implements Runnable {
 
-    private String nombreSemaforo;
-    private LinkedBlockingQueue<Coche> carril;
-    private int tiempoVerde;
-    private int tiempoRojo;
-    private boolean isVerde;
-    private Map<String, Garaje> garajes;
+    private Garaje origen;
+    private Garaje destino1, destino2;
+    private final String nombre;
+    private final boolean carrilDerch;
 
-    public Semaforo(String nombreSemaforo, Map<String, Garaje> garajes, boolean luz) {
-        super();
-        this.nombreSemaforo = nombreSemaforo;
-        this.carril = new LinkedBlockingQueue<>();
-        this.tiempoVerde = 10000;
-        this.tiempoRojo = 10000;
-        this.isVerde = luz;
-        this.garajes = garajes;
+    public Semaforo(Garaje origen, Garaje destino1, String nombre) {
+        this.origen = origen;
+        this.destino1 = destino1;
+        this.nombre = nombre; 
+        this.carrilDerch = false;
+    }
+    
+    public Semaforo(Garaje origen, Garaje destino1, Garaje destino2, String nombre) {
+        this.origen = origen;
+        this.destino1 = destino1;
+        this.destino2 = destino2;
+        this.nombre = nombre;
+        this.carrilDerch = true;
     }
 
-    public boolean getIsVerde() {
-        return isVerde;
-    }
-
-    public void setIsVerde(boolean luzEncendida) {
-        this.isVerde = luzEncendida;
-    }
-
-    public String getNombreSemaforo() {
-        return nombreSemaforo;
-    }
-
-    public LinkedBlockingQueue<Coche> getCarril() {
-        return carril;
-    }
-
-    public int acumulacionCoches() {
-        return carril.size();
-    }
-
-    public void addCoche(Coche coche) {
+    public void semaforoVerde() {
         try {
-            carril.put(coche);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Semaforo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public int getTiempoVerde() {
-        return tiempoVerde;
-    }
-
-    public void setTiempoVerde(int tiempoVerde) {
-        this.tiempoVerde = tiempoVerde;
-    }
-
-    public int getTiempoRojo() {
-        return tiempoRojo;
-    }
-
-    public void setTiempoRojo(int tiempoRojo) {
-        this.tiempoRojo = tiempoRojo;
-    }
-
-    public void salida() {
-        try {
-            Coche coche = carril.take();
-            coche.setOrigen(this.nombreSemaforo);
-            if (coche.getDireccion() == 0) {
-                switch (coche.getOrigen()) {
-                    case "s":
-                        garajes.get("w");
-                        break;
-                    case "e":
-                        garajes.get("s");
-                        break;
-                    case "n":
-                        garajes.get("e");
-                        break;
-                    case "w":
-                        garajes.get("n");
-                        break;
+            if (!carrilDerch) {
+                Coche coche = origen.retirarCoche(origen.getSemaforoCarrilIzq());
+                destino1.agregarCoche(coche);
+                System.out.println("Coche " + coche.getNombre() + " saliendo del semaforo hacia " + destino1.getNombre());
+            } else {
+                Coche coche = origen.retirarCoche(origen.getSemaforoCarrilDerch());
+                int destino = coche.getDestino();
+                if (destino == 1){
+                    destino1.agregarCoche(coche);
+                    System.out.println("Coche " + coche.getNombre() + " saliendo del semaforo hacia " + destino1.getNombre());
+                } else {
+                    destino2.agregarCoche(coche);
+                    System.out.println("Coche " + coche.getNombre() + " saliendo del semaforo hacia " + destino2.getNombre());
                 }
-            } else if (coche.getDireccion() == 1){
-                switch (coche.getOrigen()) {
-                    case "s":
-                        garajes.get("n");
-                        break;
-                    case "e":
-                        garajes.get("w");
-                        break;
-                    case "n":
-                        garajes.get("s");
-                        break;
-                    case "w":
-                        garajes.get("e");
-                        break;
-                }
-            } else if (coche.getDireccion() == 2){
-                switch (coche.getOrigen()) {
-                    case "s":
-                        garajes.get("e");
-                        break;
-                    case "e":
-                        garajes.get("n");
-                        break;
-                    case "n":
-                        garajes.get("w");
-                        break;
-                    case "w":
-                        garajes.get("s");
-                        break;
-                }
-            } coche.setDireccion();
-            System.out.println(coche.getId() + " sale de semaforo" + this.nombreSemaforo);
-        } catch (InterruptedException e) {
+            }
+            int tiempo =  500 + (int) Math.random() * 1500;
+            Thread.sleep(tiempo);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public void run() {
-        while (true) {
-            if (isVerde) {
-                while (!carril.isEmpty()) {
-                    salida();
-                }
-                try {
-                    Thread.sleep(tiempoVerde);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                try {
-                    Thread.sleep(tiempoRojo);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            isVerde = !isVerde;
-        }
+        semaforoVerde();
 
     }
-
 }
