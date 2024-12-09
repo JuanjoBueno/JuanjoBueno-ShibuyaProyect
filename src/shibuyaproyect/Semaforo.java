@@ -1,5 +1,7 @@
 package shibuyaproyect;
 
+import java.util.Random;
+
 public class Semaforo implements Runnable {
 
     private Garaje origen;
@@ -23,12 +25,13 @@ public class Semaforo implements Runnable {
     }
 
     public void semaforoVerde() {
+        
         try {
-            if (!carrilDerch) {
+            if (!carrilDerch && !origen.getSemaforoCarrilIzq().isEmpty()) {
                 Coche coche = origen.retirarCoche(origen.getSemaforoCarrilIzq());
                 destino1.agregarCoche(coche);
                 System.out.println("Coche " + coche.getNombre() + " saliendo del semaforo hacia " + destino1.getNombre());
-            } else {
+            } else if (carrilDerch && !origen.getSemaforoCarrilDerch().isEmpty()){
                 Coche coche = origen.retirarCoche(origen.getSemaforoCarrilDerch());
                 int destino = coche.getDestino();
                 if (destino == 1){
@@ -39,16 +42,19 @@ public class Semaforo implements Runnable {
                     System.out.println("Coche " + coche.getNombre() + " saliendo del semaforo hacia " + destino2.getNombre());
                 }
             }
-            int tiempo =  500 + (int) Math.random() * 1500;
+            Random aleatorio = new Random(System.currentTimeMillis());
+            int tiempo = aleatorio.nextInt(2000) + 1000;
             Thread.sleep(tiempo);
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();            
         }
+        
     }
 
     @Override
     public void run() {
-        semaforoVerde();
-
+        while (true){
+            semaforoVerde();
+        }
     }
 }

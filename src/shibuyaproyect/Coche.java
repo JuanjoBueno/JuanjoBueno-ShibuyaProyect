@@ -12,6 +12,11 @@ public class Coche {
         this.destino = destino;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+    
+
     public int getDestino() {
         return destino;
     }

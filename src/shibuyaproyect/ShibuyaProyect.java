@@ -9,14 +9,11 @@ public class ShibuyaProyect {
         Garaje e = new Garaje("E");
         Garaje w = new Garaje("W");
 
-        try {
-            n.distribuirCoches();
-            s.distribuirCoches();
-            e.distribuirCoches();
-            w.distribuirCoches();
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
+        new Thread(n).start();
+        new Thread(s).start();
+        new Thread(e).start();
+        new Thread(w).start();
+        
 
 
     }
