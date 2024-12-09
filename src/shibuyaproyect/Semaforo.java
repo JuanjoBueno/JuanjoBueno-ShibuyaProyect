@@ -71,6 +71,7 @@ public class Semaforo implements Runnable {
     public void salida() {
         try {
             Vehiculo coche = carril.take();
+            coche.setOrigen(this.nombreSemaforo);
             if (coche.getDireccion() == 0) {
                 switch (coche.getOrigen()) {
                     case "s":
@@ -116,7 +117,8 @@ public class Semaforo implements Runnable {
                         garajes.get("s");
                         break;
                 }
-            } 
+            } coche.setDireccion();
+            System.out.println(coche.getId() + " sale de " + this.nombreSemaforo);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

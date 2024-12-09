@@ -20,7 +20,7 @@ public class Garaje implements Runnable {
         this.s2 = s2;        
         
         for (int i = 0; i < numeroCoches; i++) {
-            Vehiculo coche = new Vehiculo(i+1);
+            Vehiculo coche = new Vehiculo(nombreGaraje + (i+1));            
             addCoche(coche);
         }
     }
@@ -39,9 +39,7 @@ public class Garaje implements Runnable {
 
     public void setNumeroCoches(int numeroCoches) {
         this.numeroCoches = numeroCoches;
-    }
-    
-    
+    }   
 
     public String getNombreGaraje() {
         return nombreGaraje;
@@ -78,8 +76,10 @@ public class Garaje implements Runnable {
             coche.setOrigen(this.nombreGaraje);
             if (coche.getDireccion()==0){
                 s1.addCoche(coche);
+                System.out.println(coche.getId() + " en el carril derecho desde " + coche.getOrigen() );
             } else {
-                s2.addCoche(coche);                
+                s2.addCoche(coche);
+                System.out.println(coche.getId() + " en el carril izquierdo desde " + coche.getOrigen());
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -91,10 +91,13 @@ public class Garaje implements Runnable {
         while (!garajeCola.isEmpty()) {
             salida();
             try {
-                Thread.sleep(2000); // Simular tiempo entre salidas
+                Thread.sleep(2000);
+                while (garajeCola.isEmpty()){
+                Thread.sleep(1000);
+            }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Garaje.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } 
         }
     }
 
