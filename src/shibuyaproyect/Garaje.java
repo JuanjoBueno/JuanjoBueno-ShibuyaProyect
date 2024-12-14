@@ -2,6 +2,8 @@ package shibuyaproyect;
 
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,7 +15,9 @@ public class Garaje implements Runnable{
     private final LinkedBlockingQueue<Coche> garaje;
     private final LinkedBlockingQueue<Coche> semaforoCarrilIzq;
     private final LinkedBlockingQueue<Coche> semaforoCarrilDerch;
-
+    private final Lock lock = new ReentrantLock();
+    private static final Random random = new Random();
+    
     //Constructor que crea el garaje y le asigna coches, inicializa los carriles vacios
     public Garaje(String nombre) {
         super();
@@ -65,15 +69,25 @@ public class Garaje implements Runnable{
     public int colaSemaforoCarrilDerch() {
         return semaforoCarrilDerch.size();
     }
+    
+        public int generarDestinoUnico(int n) {
+        lock.lock();
+        try {
+            int destino = random.nextInt(n);
+            return destino;
+        } finally {
+            lock.unlock();
+        }
+    }
 
     //Metodo que asigna un destino a los coches y segun el cual lo ubica en el carril correspondiente
     //destino 0 el coche girara a la izquierda, 1 seguira recto, 2 girara a la derecha
     //Si el garaje se vacia se le asigna un tiempo de espera hasta que vuelva a haber coches y siga distribuyendo
     public void distribuirCoches() throws InterruptedException {
-        Random aleatorio = new Random(System.currentTimeMillis());
+        
         while (!garaje.isEmpty()) {
             
-            int numero = aleatorio.nextInt(3);
+            int numero = generarDestinoUnico(3);
             Coche coche;
             switch (numero) {
                 case 0:
@@ -90,7 +104,7 @@ public class Garaje implements Runnable{
                     break;                
             }
             //tiempo entre un coche y otro
-            int tiempo =  aleatorio.nextInt(1500) + 500;
+            int tiempo =  random.nextInt(1500) + 500;
             Thread.sleep(tiempo);
             while (garaje.isEmpty()) {
                 Thread.sleep(2000);
