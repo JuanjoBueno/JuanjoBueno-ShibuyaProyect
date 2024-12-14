@@ -8,7 +8,7 @@ public class ShibuyaProyect {
     public static void main(String[] args) {
 
         int tiempoVerdeCarrilIzq = 5000;
-        int tiempoVerdeCarrilDerch = 12000;
+        int tiempoVerdeCarrilDerch = 10000;
         List<Semaforo> carrilIzqNS = new ArrayList<>();
         List<Semaforo> carrilIzqEW = new ArrayList<>();
         List<Semaforo> carrilDerchNS = new ArrayList<>();
@@ -17,11 +17,11 @@ public class ShibuyaProyect {
         List<Garaje> garajes = new ArrayList<>();
 
         // Crear garajes
-        Garaje garajeN = new Garaje("Garaje 1");
-        Garaje garajeS = new Garaje("Garaje 2");
-        Garaje garajeE = new Garaje("Garaje 3");
-        Garaje garajeW = new Garaje("Garaje 4");
-        
+        Garaje garajeN = new Garaje("N");
+        Garaje garajeS = new Garaje("S");
+        Garaje garajeE = new Garaje("E");
+        Garaje garajeW = new Garaje("W");
+
         garajes.add(garajeN);
         garajes.add(garajeS);
         garajes.add(garajeE);
@@ -29,39 +29,59 @@ public class ShibuyaProyect {
 
         //Creacion de semaforos y add a cada grupo
         carrilIzqNS.add(new Semaforo(garajeN, garajeE, "NIzq"));
-        carrilIzqNS.add(new Semaforo(garajeN, garajeE, "SIzq"));
-        carrilIzqEW.add(new Semaforo(garajeN, garajeE, "EIzq"));
-        carrilIzqEW.add(new Semaforo(garajeN, garajeE, "WIzq"));
+        carrilIzqNS.add(new Semaforo(garajeS, garajeE, "SIzq"));
+        carrilIzqEW.add(new Semaforo(garajeE, garajeE, "EIzq"));
+        carrilIzqEW.add(new Semaforo(garajeW, garajeE, "WIzq"));
         carrilDerchNS.add(new Semaforo(garajeN, garajeE, "NDerch"));
-        carrilDerchNS.add(new Semaforo(garajeN, garajeE, "SDerch"));
-        carrilDerchEW.add(new Semaforo(garajeN, garajeE, "EDerch"));
-        carrilDerchEW.add(new Semaforo(garajeN, garajeE, "WDerch"));
+        carrilDerchNS.add(new Semaforo(garajeS, garajeE, "SDerch"));
+        carrilDerchEW.add(new Semaforo(garajeE, garajeE, "EDerch"));
+        carrilDerchEW.add(new Semaforo(garajeW, garajeE, "WDerch"));
 
         //rellenar lista con los grupos
         listaGrupos.add(carrilIzqNS);
         listaGrupos.add(carrilIzqEW);
         listaGrupos.add(carrilDerchNS);
         listaGrupos.add(carrilDerchNS);
-        
+
         for (Garaje garaje : garajes) {
             new Thread(garaje).start();
         }
-        
+
         while (true) {
-            System.out.println("Grupo 1");
-            activarGrupo(carrilIzqNS, tiempoVerdeCarrilIzq);
-            
-            System.out.println("Grupo 2");
+            System.out.println("Grupo carril Derch NS");
             activarGrupo(carrilDerchNS, tiempoVerdeCarrilDerch);
+            for (Garaje garaje : garajes) {
+                System.out.println(garaje.cantidadCochesGaraje());
+                System.out.println(garaje.colaSemaforoCarrilIzq());
+                System.out.println(garaje.colaSemaforoCarrilDerch());
+            }
             
-            System.out.println("Grupo 3");
-            activarGrupo(carrilIzqEW, tiempoVerdeCarrilIzq);
-            
-            System.out.println("Grupo 4");
+
+            System.out.println("Grupo carril Derch EW");
             activarGrupo(carrilDerchEW, tiempoVerdeCarrilDerch);
+            for (Garaje garaje : garajes) {
+                System.out.println(garaje.cantidadCochesGaraje());
+                System.out.println(garaje.colaSemaforoCarrilIzq());
+                System.out.println(garaje.colaSemaforoCarrilDerch());
+            }
+
+            System.out.println("Grupo carril Izq NS");
+            activarGrupo(carrilIzqNS, tiempoVerdeCarrilIzq);
+            for (Garaje garaje : garajes) {
+                System.out.println(garaje.cantidadCochesGaraje());
+                System.out.println(garaje.colaSemaforoCarrilIzq());
+                System.out.println(garaje.colaSemaforoCarrilDerch());
+            }
+
+            System.out.println("Grupo carril Izq EW");
+            activarGrupo(carrilIzqEW, tiempoVerdeCarrilIzq);
+            for (Garaje garaje : garajes) {
+                System.out.println(garaje.cantidadCochesGaraje());
+                System.out.println(garaje.colaSemaforoCarrilIzq());
+                System.out.println(garaje.colaSemaforoCarrilDerch());
+            }
+
         }
-        
-        
 
     }
 
@@ -75,20 +95,24 @@ public class ShibuyaProyect {
 
             //Tiempo en el que el semaforo esta en verde
             Thread.sleep(tiempoVerde);
-            
+
             //Detenemos los hilos y se esperar a que todos terminen
             for (Semaforo semaforo : grupo) {
                 semaforo.semaforoRojo();
             }
-            
+
             //Espera a que cada hilo termine la ejecucion
-            for(Semaforo semaforo : grupo){
+            for (Semaforo semaforo : grupo) {
                 semaforo.join();
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+
+    private static void almacenesCoches() {
 
     }
 

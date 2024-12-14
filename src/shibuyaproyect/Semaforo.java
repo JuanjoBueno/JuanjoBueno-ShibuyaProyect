@@ -1,5 +1,7 @@
 package shibuyaproyect;
 
+import java.util.Random;
+
 public class Semaforo extends Thread{
 
     private volatile boolean running = true; //Bandera para controlar la ejecucion    
@@ -25,21 +27,26 @@ public class Semaforo extends Thread{
         }
 
         public void semaforoVerde() {
+            Random aleatorio = new Random(System.currentTimeMillis());
             while (running) {
                 try {
-                    if (!carrilDerch && !origen.getSemaforoCarrilIzq().isEmpty()) {
-                        Coche coche = origen.retirarCoche(origen.getSemaforoCarrilIzq());
+                    Thread.sleep(500 + aleatorio.nextInt(501));
+                    if (!this.carrilDerch && !this.origen.getSemaforoCarrilIzq().isEmpty()) {
+                        Coche coche = this.origen.retirarCoche(this.origen.getSemaforoCarrilIzq());
                         destino1.agregarCoche(coche);
-                        System.out.println("Coche " + coche.getNombre() + " saliendo del semáforo " + this.nombre + " hacia " + destino1.getNombre());
-                    } else if (carrilDerch && !origen.getSemaforoCarrilDerch().isEmpty()) {
-                        Coche coche = origen.retirarCoche(origen.getSemaforoCarrilDerch());
+                        System.out.println("Coche " + coche.getNombre() + " saliendo del semáforo " + this.nombre + " hacia el garaje " + this.destino1.getNombre());
+                        
+                    } else if (this.carrilDerch && !this.origen.getSemaforoCarrilDerch().isEmpty()) {
+                        Coche coche = this.origen.retirarCoche(this.origen.getSemaforoCarrilDerch());
                         int destino = coche.getDestino();
                         if (destino == 1) {
-                            destino1.agregarCoche(coche);
-                            System.out.println("Coche " + coche.getNombre() + " saliendo del semáforo " + this.nombre + " hacia " + destino1.getNombre());
+                            this.destino1.agregarCoche(coche);
+                            System.out.println("Coche " + coche.getNombre() + " saliendo del semáforo " + this.nombre + " hacia el garaje " + this.destino1.getNombre());
+                            
                         } else {
-                            destino2.agregarCoche(coche);
-                            System.out.println("Coche " + coche.getNombre() + " saliendo del semáforo " + this.nombre + " hacia " + destino2.getNombre());
+                            this.destino2.agregarCoche(coche);
+                            System.out.println("Coche " + coche.getNombre() + " saliendo del semáforo " + this.nombre + " hacia el garaje " + this.destino2.getNombre());
+                            
                         }
                     }
                 } catch (InterruptedException e) {
