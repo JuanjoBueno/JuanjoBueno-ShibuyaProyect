@@ -29,13 +29,13 @@ public class ShibuyaProyect {
 
         //Creacion de semaforos y add a cada grupo
         carrilIzqNS.add(new Semaforo(garajeN, garajeE, "NIzq"));
-        carrilIzqNS.add(new Semaforo(garajeS, garajeE, "SIzq"));
-        carrilIzqEW.add(new Semaforo(garajeE, garajeE, "EIzq"));
-        carrilIzqEW.add(new Semaforo(garajeW, garajeE, "WIzq"));
-        carrilDerchNS.add(new Semaforo(garajeN, garajeE, "NDerch"));
-        carrilDerchNS.add(new Semaforo(garajeS, garajeE, "SDerch"));
-        carrilDerchEW.add(new Semaforo(garajeE, garajeE, "EDerch"));
-        carrilDerchEW.add(new Semaforo(garajeW, garajeE, "WDerch"));
+        carrilIzqNS.add(new Semaforo(garajeS, garajeW, "SIzq"));
+        carrilIzqEW.add(new Semaforo(garajeE, garajeS, "EIzq"));
+        carrilIzqEW.add(new Semaforo(garajeW, garajeN, "WIzq"));
+        carrilDerchNS.add(new Semaforo(garajeN, garajeS, garajeW, "NDerch"));
+        carrilDerchNS.add(new Semaforo(garajeS, garajeN, garajeE, "SDerch"));
+        carrilDerchEW.add(new Semaforo(garajeE, garajeW, garajeN, "EDerch"));
+        carrilDerchEW.add(new Semaforo(garajeW, garajeE, garajeS, "WDerch"));
 
         //rellenar lista con los grupos
         listaGrupos.add(carrilIzqNS);
