@@ -10,7 +10,7 @@ public class ShibuyaProyect {
         Garaje garaje4 = new Garaje("Garaje 4");
 
         // Crear instancia del controlador de semáforos
-        Semaforo controlador = new Semaforo();
+        
 
         // Crear hilos para los semáforos
         Thread[] semaforos = new Thread[8];
