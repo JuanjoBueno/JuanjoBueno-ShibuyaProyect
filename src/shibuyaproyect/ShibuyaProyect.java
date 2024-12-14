@@ -14,12 +14,18 @@ public class ShibuyaProyect {
         List<Semaforo> carrilDerchNS = new ArrayList<>();
         List<Semaforo> carrilDerchEW = new ArrayList<>();
         List<List<Semaforo>> listaGrupos = new ArrayList<>();
+        List<Garaje> garajes = new ArrayList<>();
 
         // Crear garajes
         Garaje garajeN = new Garaje("Garaje 1");
         Garaje garajeS = new Garaje("Garaje 2");
         Garaje garajeE = new Garaje("Garaje 3");
         Garaje garajeW = new Garaje("Garaje 4");
+        
+        garajes.add(garajeN);
+        garajes.add(garajeS);
+        garajes.add(garajeE);
+        garajes.add(garajeW);
 
         //Creacion de semaforos y add a cada grupo
         carrilIzqNS.add(new Semaforo(garajeN, garajeE, "NIzq"));
@@ -36,6 +42,26 @@ public class ShibuyaProyect {
         listaGrupos.add(carrilIzqEW);
         listaGrupos.add(carrilDerchNS);
         listaGrupos.add(carrilDerchNS);
+        
+        for (Garaje garaje : garajes) {
+            new Thread(garaje).start();
+        }
+        
+        while (true) {
+            System.out.println("Grupo 1");
+            activarGrupo(carrilIzqNS, tiempoVerdeCarrilIzq);
+            
+            System.out.println("Grupo 2");
+            activarGrupo(carrilDerchNS, tiempoVerdeCarrilDerch);
+            
+            System.out.println("Grupo 3");
+            activarGrupo(carrilIzqEW, tiempoVerdeCarrilIzq);
+            
+            System.out.println("Grupo 4");
+            activarGrupo(carrilDerchEW, tiempoVerdeCarrilDerch);
+        }
+        
+        
 
     }
 
