@@ -1,48 +1,54 @@
 package shibuyaproyect;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ShibuyaProyect {
 
     public static void main(String[] args) {
+        
+        int tiempoVerdeCarrilIzq = 5000;
+        int tiempoVerdeCarrilDerch = 12000;
+        List<Semaforo> carrilIzqNS = new ArrayList<>();
+        List<Semaforo> carrilIzqEW = new ArrayList<>();
+        List<Semaforo> carrilDerchNS = new ArrayList<>();
+        List<Semaforo> carrilDerchEW = new ArrayList<>();
+        List<List<Semaforo>> listaGrupos = new ArrayList<>();
+        
         // Crear garajes
-        Garaje garaje1 = new Garaje("Garaje 1");
-        Garaje garaje2 = new Garaje("Garaje 2");
-        Garaje garaje3 = new Garaje("Garaje 3");
-        Garaje garaje4 = new Garaje("Garaje 4");
-
-        // Crear instancia del controlador de semáforos
+        Garaje garajeN = new Garaje("Garaje 1");
+        Garaje garajeS = new Garaje("Garaje 2");
+        Garaje garajeE = new Garaje("Garaje 3");
+        Garaje garajeW = new Garaje("Garaje 4");
+        
+        //Creacion de semaforos y add a cada grupo
+        carrilIzqNS.add(new Semaforo(garajeN, garajeE, "NIzq"));
+        carrilIzqNS.add(new Semaforo(garajeN, garajeE, "SIzq"));
+        carrilIzqEW.add(new Semaforo(garajeN, garajeE, "EIzq"));
+        carrilIzqEW.add(new Semaforo(garajeN, garajeE, "WIzq"));
+        carrilDerchNS.add(new Semaforo(garajeN, garajeE, "NDerch"));
+        carrilDerchNS.add(new Semaforo(garajeN, garajeE, "SDerch"));
+        carrilDerchEW.add(new Semaforo(garajeN, garajeE, "EDerch"));
+        carrilDerchEW.add(new Semaforo(garajeN, garajeE, "WDerch"));
+        
+        //rellenar lista con los grupos
+        listaGrupos.add(carrilIzqNS);
+        listaGrupos.add(carrilIzqEW);
+        listaGrupos.add(carrilDerchNS);
+        listaGrupos.add(carrilDerchNS);
+        
+        
+        
+        
+        
+        
+        
+        
+                
+        
+        
         
 
-        // Crear hilos para los semáforos
-        Thread[] semaforos = new Thread[8];
-        semaforos[0] = new Thread(controlador.new Semaforo(garaje1, garaje2, null, 0));
-        semaforos[1] = new Thread(controlador.new Semaforo(garaje1, garaje2, garaje3, 1));
-        semaforos[2] = new Thread(controlador.new Semaforo(garaje2, garaje3, null, 2));
-        semaforos[3] = new Thread(controlador.new Semaforo(garaje2, garaje3, garaje4, 3));
-        semaforos[4] = new Thread(controlador.new Semaforo(garaje3, garaje4, null, 4));
-        semaforos[5] = new Thread(controlador.new Semaforo(garaje3, garaje4, garaje1, 5));
-        semaforos[6] = new Thread(controlador.new Semaforo(garaje4, garaje1, null, 6));
-        semaforos[7] = new Thread(controlador.new Semaforo(garaje4, garaje1, garaje2, 7));
-
-        // Crear hilos para los garajes
-        Thread garajeHilo1 = new Thread(garaje1);
-        Thread garajeHilo2 = new Thread(garaje2);
-        Thread garajeHilo3 = new Thread(garaje3);
-        Thread garajeHilo4 = new Thread(garaje4);
-
-        // Iniciar los hilos de los garajes
-        garajeHilo1.start();
-        garajeHilo2.start();
-        garajeHilo3.start();
-        garajeHilo4.start();
-
-        // Iniciar los hilos de los semáforos
-        for (Thread semaforo : semaforos) {
-            semaforo.start();
-        }
-
-        // Iniciar el hilo del controlador
-        Thread controladorHilo = new Thread(controlador.new Controlador());
-        controladorHilo.start();
     }
 
 }

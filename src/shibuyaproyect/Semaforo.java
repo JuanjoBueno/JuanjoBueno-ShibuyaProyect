@@ -6,17 +6,17 @@ public class Semaforo implements Runnable {
 
         private Garaje origen;
         private Garaje destino1, destino2;
-        private int nombre;
+        private String nombre;
         private boolean carrilDerch;
 
-        public Semaforo(Garaje origen, Garaje destino1, int nombre) {
+        public Semaforo(Garaje origen, Garaje destino1, String nombre) {
             this.origen = origen;
             this.destino1 = destino1;
             this.nombre = nombre;
             this.carrilDerch = false;
         }
 
-        public Semaforo(Garaje origen, Garaje destino1, Garaje destino2, int nombre) {
+        public Semaforo(Garaje origen, Garaje destino1, Garaje destino2, String nombre) {
             this.origen = origen;
             this.destino1 = destino1;
             this.destino2 = destino2;
