@@ -1,6 +1,6 @@
 package shibuyaproyect;
 
-public class Semaforo implements Runnable {
+public class Semaforo extends Thread{
 
     private volatile boolean running = true; //Bandera para controlar la ejecucion    
 
