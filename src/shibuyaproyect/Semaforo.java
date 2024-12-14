@@ -47,6 +47,10 @@ public class Semaforo implements Runnable {
                 }
             }
         }
+        
+        public void semaforoRojo(){
+            running = false;
+        }
 
         @Override
         public void run() {
