@@ -22,7 +22,7 @@ public class Garaje implements Runnable{
         this.semaforoCarrilIzq = new LinkedBlockingQueue<>();
         this.semaforoCarrilDerch = new LinkedBlockingQueue<>();
         for (int i = 0; i < cochesIniciales; i++) {
-            agregarCoche(new Coche(nombre + (i + 1)));
+            agregarCoche(new Coche("Coche " + (i + 1) + " del " + nombre));
         }
     }
 
@@ -70,8 +70,8 @@ public class Garaje implements Runnable{
     //destino 0 el coche girara a la izquierda, 1 seguira recto, 2 girara a la derecha
     //Si el garaje se vacia se le asigna un tiempo de espera hasta que vuelva a haber coches y siga distribuyendo
     public void distribuirCoches() throws InterruptedException {
-        while (!garaje.isEmpty()) {
-            Random aleatorio = new Random(System.currentTimeMillis());
+        Random aleatorio = new Random(System.currentTimeMillis());
+        while (!garaje.isEmpty()) {            
             int numero = aleatorio.nextInt(3);
             Coche coche;
             switch (numero) {
@@ -81,18 +81,12 @@ public class Garaje implements Runnable{
                     recibirCoche(coche, semaforoCarrilIzq);
                     System.out.println(coche.getNombre() + " esperando en el semaforo " + nombre + "Izq");
                     break;
-                case 1:
+                case 1, 2:
                     coche = retirarCoche(garaje);
                     coche.setDestino(numero);
                     recibirCoche(coche, semaforoCarrilDerch);
                     System.out.println(coche.getNombre() + " esperando en el semaforo " + nombre + "Derch");
-                    break;
-                case 2:
-                    coche = retirarCoche(garaje);
-                    coche.setDestino(numero);
-                    recibirCoche(coche, semaforoCarrilDerch);
-                    System.out.println(coche.getNombre() + " esperando en el semaforo " + nombre + "Derch");
-                    break;
+                    break;                
             }
             //tiempo entre un coche y otro
             int tiempo =  aleatorio.nextInt(2500) + 500;

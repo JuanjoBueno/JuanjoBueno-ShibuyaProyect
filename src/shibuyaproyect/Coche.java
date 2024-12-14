@@ -1,7 +1,5 @@
 package shibuyaproyect;
 
-import java.util.Random;
-
 public class Coche {
 
         private final String nombre;

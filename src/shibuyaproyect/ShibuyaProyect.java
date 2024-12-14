@@ -1,43 +1,48 @@
 package shibuyaproyect;
 
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class ShibuyaProyect {
 
     public static void main(String[] args) {
+        // Crear garajes
+        Garaje garaje1 = new Garaje("Garaje 1");
+        Garaje garaje2 = new Garaje("Garaje 2");
+        Garaje garaje3 = new Garaje("Garaje 3");
+        Garaje garaje4 = new Garaje("Garaje 4");
 
-        //Creacion de los garajes
-        Garaje n = new Garaje("N");
-        Garaje s = new Garaje("S");
-        Garaje e = new Garaje("E");
-        Garaje w = new Garaje("W");
+        // Crear instancia del controlador de semáforos
+        Semaforo controlador = new Semaforo();
 
-        //Creacion de los semaforos
-        Semaforo n1 = new Semaforo(n, e, "n1",0);
-        Semaforo n2 = new Semaforo(n, s, w, "n2",1);
-        Semaforo s1 = new Semaforo(s, w, "s1",0);
-        Semaforo s2 = new Semaforo(s, n, e, "s2",1);
-        Semaforo e1 = new Semaforo(e, s, "e1",2);
-        Semaforo e2 = new Semaforo(e, w, n, "e2",3);
-        Semaforo w1 = new Semaforo(w, n, "w1",2);
-        Semaforo w2 = new Semaforo(w, e, s, "w2",3);
+        // Crear hilos para los semáforos
+        Thread[] semaforos = new Thread[8];
+        semaforos[0] = new Thread(controlador.new Semaforo(garaje1, garaje2, null, 0));
+        semaforos[1] = new Thread(controlador.new Semaforo(garaje1, garaje2, garaje3, 1));
+        semaforos[2] = new Thread(controlador.new Semaforo(garaje2, garaje3, null, 2));
+        semaforos[3] = new Thread(controlador.new Semaforo(garaje2, garaje3, garaje4, 3));
+        semaforos[4] = new Thread(controlador.new Semaforo(garaje3, garaje4, null, 4));
+        semaforos[5] = new Thread(controlador.new Semaforo(garaje3, garaje4, garaje1, 5));
+        semaforos[6] = new Thread(controlador.new Semaforo(garaje4, garaje1, null, 6));
+        semaforos[7] = new Thread(controlador.new Semaforo(garaje4, garaje1, garaje2, 7));
 
-        //Lanzamos los hilos
-        new Thread(n).start();
-        new Thread(s).start();
-        new Thread(e).start();
-        new Thread(w).start();
-        new Thread(n1).start();
-        new Thread(s1).start();
-        new Thread(e1).start();
-        new Thread(w1).start();
-        new Thread(n2).start();
-        new Thread(s2).start();
-        new Thread(e2).start();
-        new Thread(w2).start();
+        // Crear hilos para los garajes
+        Thread garajeHilo1 = new Thread(garaje1);
+        Thread garajeHilo2 = new Thread(garaje2);
+        Thread garajeHilo3 = new Thread(garaje3);
+        Thread garajeHilo4 = new Thread(garaje4);
 
+        // Iniciar los hilos de los garajes
+        garajeHilo1.start();
+        garajeHilo2.start();
+        garajeHilo3.start();
+        garajeHilo4.start();
+
+        // Iniciar los hilos de los semáforos
+        for (Thread semaforo : semaforos) {
+            semaforo.start();
+        }
+
+        // Iniciar el hilo del controlador
+        Thread controladorHilo = new Thread(controlador.new Controlador());
+        controladorHilo.start();
     }
 
 }
