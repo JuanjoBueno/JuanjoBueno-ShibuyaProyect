@@ -27,27 +27,30 @@ public class ShibuyaProyect {
         garajes.add(garajeE);
         garajes.add(garajeW);
 
-        //Creacion de semaforos y add a cada grupo
-        carrilIzqNS.add(new Semaforo(garajeN, garajeE, "NIzq"));
-        carrilIzqNS.add(new Semaforo(garajeS, garajeW, "SIzq"));
-        carrilIzqEW.add(new Semaforo(garajeE, garajeS, "EIzq"));
-        carrilIzqEW.add(new Semaforo(garajeW, garajeN, "WIzq"));
-        carrilDerchNS.add(new Semaforo(garajeN, garajeS, garajeW, "NDerch"));
-        carrilDerchNS.add(new Semaforo(garajeS, garajeN, garajeE, "SDerch"));
-        carrilDerchEW.add(new Semaforo(garajeE, garajeW, garajeN, "EDerch"));
-        carrilDerchEW.add(new Semaforo(garajeW, garajeE, garajeS, "WDerch"));
-
-        //rellenar lista con los grupos
-        listaGrupos.add(carrilIzqNS);
-        listaGrupos.add(carrilIzqEW);
-        listaGrupos.add(carrilDerchNS);
-        listaGrupos.add(carrilDerchNS);
-
         for (Garaje garaje : garajes) {
             new Thread(garaje).start();
         }
-
         while (true) {
+            //Creacion de semaforos y add a cada grupo
+            carrilIzqNS.clear();
+            carrilIzqEW.clear();
+            carrilDerchNS.clear();
+            carrilDerchEW.clear();
+            carrilIzqNS.add(new Semaforo(garajeN, garajeE, "NIzq"));
+            carrilIzqNS.add(new Semaforo(garajeS, garajeW, "SIzq"));
+            carrilIzqEW.add(new Semaforo(garajeE, garajeS, "EIzq"));
+            carrilIzqEW.add(new Semaforo(garajeW, garajeN, "WIzq"));
+            carrilDerchNS.add(new Semaforo(garajeN, garajeS, garajeW, "NDerch"));
+            carrilDerchNS.add(new Semaforo(garajeS, garajeN, garajeE, "SDerch"));
+            carrilDerchEW.add(new Semaforo(garajeE, garajeW, garajeN, "EDerch"));
+            carrilDerchEW.add(new Semaforo(garajeW, garajeE, garajeS, "WDerch"));
+
+            //rellenar lista con los grupos
+            listaGrupos.add(carrilIzqNS);
+            listaGrupos.add(carrilIzqEW);
+            listaGrupos.add(carrilDerchNS);
+            listaGrupos.add(carrilDerchNS);
+
             System.out.println("Grupo carril Derch NS");
             activarGrupo(carrilDerchNS, tiempoVerdeCarrilDerch);
             for (Garaje garaje : garajes) {
@@ -55,7 +58,6 @@ public class ShibuyaProyect {
                 System.out.println(garaje.colaSemaforoCarrilIzq());
                 System.out.println(garaje.colaSemaforoCarrilDerch());
             }
-            
 
             System.out.println("Grupo carril Derch EW");
             activarGrupo(carrilDerchEW, tiempoVerdeCarrilDerch);
@@ -109,10 +111,6 @@ public class ShibuyaProyect {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-    }
-
-    private static void almacenesCoches() {
 
     }
 

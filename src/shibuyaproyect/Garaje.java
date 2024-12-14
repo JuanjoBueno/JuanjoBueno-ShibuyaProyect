@@ -90,7 +90,7 @@ public class Garaje implements Runnable{
                     break;                
             }
             //tiempo entre un coche y otro
-            int tiempo =  aleatorio.nextInt(1000) + 1000;
+            int tiempo =  aleatorio.nextInt(1500) + 500;
             Thread.sleep(tiempo);
             while (garaje.isEmpty()) {
                 Thread.sleep(2000);
