@@ -13,7 +13,7 @@ Shibuya Traffic Simulation Project
 
 ## **Estructura Concurrente**
 
-El proyecto utiliza la clase `Thread` de Java para modelar la concurrencia. Cada semáforo y garaje se implementa como un hilo independiente que ejecuta su lógica concurrentemente.
+En este proyecto, se utiliza la clase LinkedBlockingQueue de la biblioteca estándar de Java para gestionar la concurrencia de forma eficiente y segura. Esta estructura de datos nos permite coordinar el flujo de vehículos entre los garajes y los semáforos, asegurando que las operaciones de acceso sean thread-safe.
 
 ### **Descripción de la Estructura**
 
