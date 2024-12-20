@@ -7,7 +7,7 @@ public class Coche {
 
     public Coche(String nombre) {
         this.nombre = nombre;
-        this.destino = destino;
+        this.destino = destino; // Destino del coche (izquierda = 1, recto = 2 o derecha = 3).
     }
 
     public String getNombre() {
