@@ -5,8 +5,7 @@ import java.util.Random;
 // Clase que representa un semáforo que regula el paso de coches entre los garajes.
 public class Semaforo extends Thread {
 
-    private volatile boolean running = true; //Bandera para controlar la ejecucion del semáforo
-    //private static CyclicBarrier barrera = new CyclicBarrier(2);
+    private volatile boolean running = true; //Bandera para controlar la ejecucion del semáforo    
     private Garaje origen; // Garaje de origen de los coches.
     private Garaje destino1, destino2; // Garajes de destino para los coches.
     private String nombre; // Nombre del semáforo.

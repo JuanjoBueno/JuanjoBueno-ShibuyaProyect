@@ -57,39 +57,26 @@ public class ShibuyaProyect {
             listaGrupos.add(carrilIzqEW);
             listaGrupos.add(carrilDerchNS);
             listaGrupos.add(carrilDerchNS);
+            
+            //impresion por terminal
+            
 
             // Activar cada grupo de semáforos y mostrar información del estado de los garajes.
-            System.out.println("Grupo carril Derch NS");
+            System.out.println("\nGrupo carril Derch NS\n");
             activarGrupo(carrilDerchNS, tiempoVerdeCarrilDerch);
-            for (Garaje garaje : garajes) {
-                System.out.println("Garaje " + garaje.getNombre() + " con una ocupacion de " + garaje.cantidadCochesGaraje());
-                System.out.println(" - Carril izquierdo con ocupacion de " + garaje.colaSemaforoCarrilIzq());
-                System.out.println(" - Carril derecho con ocupacion de " + garaje.colaSemaforoCarrilDerch());
-            }
+            impresion(garajes);
 
-            System.out.println("Grupo carril Derch EW");
+            System.out.println("\nGrupo carril Derch EW\n");
             activarGrupo(carrilDerchEW, tiempoVerdeCarrilDerch);
-            for (Garaje garaje : garajes) {
-                System.out.println("Garaje " + garaje.getNombre() + " con una ocupacion de " + garaje.cantidadCochesGaraje());
-                System.out.println(" - Carril izquierdo con ocupacion de " + garaje.colaSemaforoCarrilIzq());
-                System.out.println(" - Carril derecho con ocupacion de " + garaje.colaSemaforoCarrilDerch());
-            }
+            impresion(garajes);
 
-            System.out.println("Grupo carril Izq NS");
+            System.out.println("\nGrupo carril Izq NS\n");
             activarGrupo(carrilIzqNS, tiempoVerdeCarrilIzq);
-            for (Garaje garaje : garajes) {
-                System.out.println("Garaje " + garaje.getNombre() + " con una ocupacion de " + garaje.cantidadCochesGaraje());
-                System.out.println(" - Carril izquierdo con ocupacion de " + garaje.colaSemaforoCarrilIzq());
-                System.out.println(" - Carril derecho con ocupacion de " + garaje.colaSemaforoCarrilDerch());
-            }
+            impresion(garajes);
 
-            System.out.println("Grupo carril Izq EW");
+            System.out.println("\nGrupo carril Izq EW\n");
             activarGrupo(carrilIzqEW, tiempoVerdeCarrilIzq);
-            for (Garaje garaje : garajes) {
-                System.out.println("Garaje " + garaje.getNombre() + " con una ocupacion de " + garaje.cantidadCochesGaraje());
-                System.out.println(" - Carril izquierdo con ocupacion de " + garaje.colaSemaforoCarrilIzq());
-                System.out.println(" - Carril derecho con ocupacion de " + garaje.colaSemaforoCarrilDerch());
-            }
+            impresion(garajes);
 
         }
 
@@ -125,6 +112,14 @@ public class ShibuyaProyect {
             e.printStackTrace();
         }
 
+    }
+    
+    public static void impresion(List<Garaje> garajes){
+        for (Garaje garaje : garajes) {
+                System.out.println("\nGaraje " + garaje.getNombre() + " con una ocupacion de " + garaje.cantidadCochesGaraje());
+                System.out.println(" - Carril izquierdo con ocupacion de " + garaje.colaSemaforoCarrilIzq());
+                System.out.println(" - Carril derecho con ocupacion de " + garaje.colaSemaforoCarrilDerch());
+            }
     }
 
 }
