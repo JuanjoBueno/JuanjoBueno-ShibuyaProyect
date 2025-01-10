@@ -41,12 +41,29 @@ El proyecto simula el flujo de tráfico en un cruce concurrido similar al de Shi
 | Garaje   | `asignarDestinoAleatorio()` | Asigna un destino único para cada coche.                        |
 | Main     | `activarGrupo()`            | Activa los semáforos de un grupo durante un tiempo determinado. |
 
+## **Interfaz Gráfica**
+
+La interfaz gráfica del proyecto está implementada con Java Swing. Ofrece una representación visual en tiempo real del estado de los garajes y semáforos mediante barras de progreso y texto descriptivo.
+
+**Funcionalidades de la GUI**
+
+- Visualización dinámica: Barras de progreso que muestran la capacidad actual de cada garaje y semáforo.
+
+- Texto descriptivo: Indicadores con nombres y cantidades para identificar el estado actual.
+
+**Diseño**
+
+- Cada garaje y semáforo tiene un JProgressBar asociado.
+
+- El estado de las colas se actualiza automáticamente mediante eventos disparados por los garajes y semáforos.
+
 ## **Descripción de los Ficheros del Proyecto**
 
 - **ShibuyaProyect.java**: Contiene el método principal y gestiona la alternancia de los grupos de semáforos.
 - **Semaforo.java**: Define la lógica de los semáforos y su comportamiento como hilos concurrentes.
 - **Garaje.java**: Modelo de garaje que administra los coches y sus destinos.
 - **Coche.java**: Representación de un coche, incluyendo su identificación y destino.
+- **CruceGUI**: Clase que gestiona la interfaz gráfica del proyecto.
 
 ---
 
