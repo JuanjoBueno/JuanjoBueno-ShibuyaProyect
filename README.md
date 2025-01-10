@@ -41,7 +41,7 @@ El proyecto simula el flujo de tráfico en un cruce concurrido similar al de Shi
 | Garaje   | `asignarDestinoAleatorio()` | Asigna un destino único para cada coche.                        |
 | Main     | `activarGrupo()`            | Activa los semáforos de un grupo durante un tiempo determinado. |
 
-## **Interfaz Gráfica**
+## **Interfaz Grafica**
 
 La interfaz gráfica del proyecto está implementada con Java Swing. Ofrece una representación visual en tiempo real del estado de los garajes y semáforos mediante barras de progreso y texto descriptivo.
 
