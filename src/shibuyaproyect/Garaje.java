@@ -1,5 +1,6 @@
 package shibuyaproyect;
 
+
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.Lock;
@@ -17,6 +18,7 @@ public class Garaje implements Runnable {
     private final LinkedBlockingQueue<Coche> semaforoCarrilDerch; // Cola para los coches que van al carril derecho.
     private final Lock lock = new ReentrantLock(); // Lock para controlar el acceso para generar un destino único
     private static final Random random = new Random();
+    
 
     /**
      * Constructor que crea el garaje y le asigna coches, inicializa los carriles vacios
@@ -74,6 +76,7 @@ public class Garaje implements Runnable {
      * @throws InterruptedException 
      */
     public void recibirCoche(Coche coche, LinkedBlockingQueue<Coche> almacen) throws InterruptedException {
+        
         almacen.put(coche);
     }
 
@@ -111,6 +114,11 @@ public class Garaje implements Runnable {
             lock.unlock();
         }
     }
+    
+    
+
+
+
 
     /**
      * Metodo que asigna un destino a los coches y segun el cual lo ubica en el carril correspondiente
@@ -128,12 +136,14 @@ public class Garaje implements Runnable {
             switch (numero) {
                 case 0:
                     coche = retirarCoche(garaje);
+                    
                     coche.setDestino(numero);
                     recibirCoche(coche, semaforoCarrilIzq);
                     System.out.println(coche.getNombre() + " esperando en el semaforo " + nombre + "Izq con destino " + coche.getDestino());
                     break;
                 case 1, 2:
                     coche = retirarCoche(garaje);
+                    
                     coche.setDestino(numero);
                     recibirCoche(coche, semaforoCarrilDerch);
                     System.out.println(coche.getNombre() + " esperando en el semaforo " + nombre + "Derch con destino " + coche.getDestino());

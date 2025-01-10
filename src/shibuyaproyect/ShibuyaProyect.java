@@ -1,14 +1,26 @@
 package shibuyaproyect;
 
+import GUI.VisualizadorColas;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Clase main que se encarga de la ejecución de todos los hilos y que se
- *  muestre la informacón.
+/**
+ * Clase main que se encarga de la ejecución de todos los hilos y que se muestre
+ * la informacón.
  */
 public class ShibuyaProyect {
 
-    public static void main(String[] args) {
+
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[36m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    
+    public static final String[] colores = {ANSI_YELLOW,ANSI_GREEN,ANSI_BLUE,ANSI_PURPLE};
+
+    public static void main(String[] args) {       
+        
 
         int tiempoVerdeCarrilIzq = 5000; // Tiempo en verde para el carril izquierdo.
         int tiempoVerdeCarrilDerch = 10000; // Tiempo en verde para el carril derecho.
@@ -24,6 +36,9 @@ public class ShibuyaProyect {
         Garaje garajeS = new Garaje("S");
         Garaje garajeE = new Garaje("E");
         Garaje garajeW = new Garaje("W");
+        
+        VisualizadorColas visualizador = new VisualizadorColas(List.of(garajeN, garajeS, garajeE, garajeW));
+        visualizador.mostrar();
 
         garajes.add(garajeN);
         garajes.add(garajeS);
@@ -34,19 +49,19 @@ public class ShibuyaProyect {
         for (Garaje garaje : garajes) {
             new Thread(garaje).start();
         }
-        
+
         while (true) {
             // Crear semáforos para cada grupo y añadirlos a las listas de semáforos correspondientes.
             carrilIzqNS.clear();
             carrilIzqEW.clear();
             carrilDerchNS.clear();
             carrilDerchEW.clear();
-            
+
             carrilIzqNS.add(new Semaforo(garajeN, garajeE, "NIzq"));
             carrilIzqNS.add(new Semaforo(garajeS, garajeW, "SIzq"));
             carrilIzqEW.add(new Semaforo(garajeE, garajeS, "EIzq"));
             carrilIzqEW.add(new Semaforo(garajeW, garajeN, "WIzq"));
-            
+
             carrilDerchNS.add(new Semaforo(garajeN, garajeS, garajeW, "NDerch"));
             carrilDerchNS.add(new Semaforo(garajeS, garajeN, garajeE, "SDerch"));
             carrilDerchEW.add(new Semaforo(garajeE, garajeW, garajeN, "EDerch"));
@@ -56,11 +71,10 @@ public class ShibuyaProyect {
             listaGrupos.add(carrilIzqNS);
             listaGrupos.add(carrilIzqEW);
             listaGrupos.add(carrilDerchNS);
-            listaGrupos.add(carrilDerchNS);
-            
-            //impresion por terminal
+            listaGrupos.add(carrilDerchNS);            
             
 
+            //impresion por terminal
             // Activar cada grupo de semáforos y mostrar información del estado de los garajes.
             System.out.println("\nGrupo carril Derch NS\n");
             activarGrupo(carrilDerchNS, tiempoVerdeCarrilDerch);
@@ -84,8 +98,9 @@ public class ShibuyaProyect {
 
     /**
      * Método que activa un grupo de semáforos y controla su tiempo en verde.
+     *
      * @param grupo
-     * @param tiempoVerde 
+     * @param tiempoVerde
      */
     private static void activarGrupo(List<Semaforo> grupo, int tiempoVerde) {
         try {
@@ -113,13 +128,15 @@ public class ShibuyaProyect {
         }
 
     }
-    
-    public static void impresion(List<Garaje> garajes){
+
+    public static void impresion(List<Garaje> garajes) {
+        int contador = 0;
         for (Garaje garaje : garajes) {
-                System.out.println("\nGaraje " + garaje.getNombre() + " con una ocupacion de " + garaje.cantidadCochesGaraje());
-                System.out.println(" - Carril izquierdo con ocupacion de " + garaje.colaSemaforoCarrilIzq());
-                System.out.println(" - Carril derecho con ocupacion de " + garaje.colaSemaforoCarrilDerch());
-            }
+            System.err.println(colores[contador] + "\nGaraje " + garaje.getNombre() + " con una ocupacion de " + garaje.cantidadCochesGaraje());
+            System.err.println(" - Carril izquierdo con ocupacion de " + garaje.colaSemaforoCarrilIzq());
+            System.err.println(" - Carril derecho con ocupacion de " + garaje.colaSemaforoCarrilDerch() + ANSI_RESET);
+            contador++;
+        }
     }
 
 }
